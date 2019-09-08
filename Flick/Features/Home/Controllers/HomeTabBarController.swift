@@ -14,6 +14,8 @@ final class HomeTabBarController: BaseTabBarController, HomeTabBarAction {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewControllers = [ UINavigationController(), UINavigationController() ]
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {

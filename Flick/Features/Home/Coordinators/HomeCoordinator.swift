@@ -23,6 +23,7 @@ final class HomeCoordinator: Coordinator {
     private lazy var searchTabSelected: ((UINavigationController) -> Void) = { [weak self] (navigationController) in
         guard navigationController.viewControllers.isEmpty else { return }
         //Add Discover Dependency
+        
     }
     
     init(with homeTabBarController: HomeTabBarController, coordinatorFactory: CoordinatorFactory) {

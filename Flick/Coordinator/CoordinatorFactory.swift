@@ -6,10 +6,12 @@
 //  Copyright © 2019 Haider Ali Kazal. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol CoordinatorFactory {
     var tabBarCoordinator: (configurator: Coordinator, toPresent: Presentable) { get }
+    
+    func discoverCoordinator(embedIn navigationController: UINavigationController) -> Coordinator
     
     /*
      func makeAuthCoordinatorBox(router: Router) -> Coordinator & AuthCoordinatorOutput
@@ -34,6 +36,12 @@ protocol CoordinatorFactory {
 
 final class DefaultCoordinatorFactory: CoordinatorFactory {
     var tabBarCoordinator: (configurator: Coordinator, toPresent: Presentable) {
+        let homeTabBarController = HomeTabBarController()
+        let homeCoordinator = HomeCoordinator(with: homeTabBarController, coordinatorFactory: DefaultCoordinatorFactory())
+        return (homeCoordinator, homeTabBarController)
+    }
+    
+    func discoverCoordinator(embedIn navigationController: UINavigationController) -> Coordinator {
         preconditionFailure("Not yet implemented")
     }
 }

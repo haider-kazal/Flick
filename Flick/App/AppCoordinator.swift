@@ -9,7 +9,7 @@
 import UIKit
 
 final class AppCoordinator: Coordinator {
-    private let router: Router
+    private let router: AppRouter
     private let coordinatorFactory: CoordinatorFactory
     
     lazy var childCoordinators: [Coordinator] = []
@@ -18,7 +18,7 @@ final class AppCoordinator: Coordinator {
     
     init(with window: UIWindow) {
         self.window = window
-        self.router = DefaultRouter(rootNavigationController: UINavigationController())
+        self.router = DefaultAppRouter(rootNavigationController: UINavigationController())
         self.coordinatorFactory = DefaultCoordinatorFactory()
     }
     

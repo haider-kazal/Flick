@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol Router: Presentable {
+protocol AppRouter: Presentable {
     func present(viewController: Presentable, withAnimation isAnimated: Bool, onCompletion completionHandler: (() -> Void)?)
     func dismiss(withAnimation isAnimated: Bool, onCompletion completionHandler: (() -> Void)?)
     
@@ -19,7 +19,7 @@ protocol Router: Presentable {
     func changeRootTo(viewController: Presentable, withAnimation isAnimated: Bool, hidingNavigationBar shouldHideNavigationBar: Bool)
 }
 
-final class DefaultRouter: Router {
+final class DefaultAppRouter: AppRouter {
     private lazy var completionHandlers: [UIViewController: (() -> Void)?] = [:]
     private weak var rootNavigationController: UINavigationController?
     
