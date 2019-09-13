@@ -8,88 +8,129 @@
 
 import Foundation
 
-protocol DiscoverViewModel: BaseViewModel {
-    associatedtype MoviesViewModel: DiscoverMoviesViewModel
-    associatedtype TVShowsViewModel: DiscoverTVShowsViewModel
-    
-    var moviesViewModel: MoviesViewModel { get }
-    var tvShowsViewModel: TVShowsViewModel { get }
-    var numberOfSections: Int { get }
-}
-
-protocol DiscoverMoviesViewModel: BaseViewModel {
-    var movies: [TMDbDiscoverMovie] { get }
-    var numberOfElements: Int { get }
-    var updateMoviesUISection: (() -> Void)? { get set }
-}
-
-protocol DiscoverTVShowsViewModel: BaseViewModel {
-    var tvShows: [TMDbDiscoverTVShow] { get }
-    var numberOfElements: Int { get }
-    var updateTVShowsUISection: (() -> Void)? { get set }
-}
-
 enum DiscoverViewModelSection: Int, CaseIterable {
     case movies = 0
     case tvShows = 1
+    
+    var title: String {
+        switch self {
+        case .movies:
+            return "Movies"
+        case .tvShows:
+            return "TV Shows"
+        }
+    }
 }
 
-final class DefaultDiscoverMoviesViewModel: DiscoverMoviesViewModel {
+protocol DiscoverViewModel: BaseViewModel {
+    var moviesViewModel: [DiscoverMovieViewModel] { get }
+    var tvShowsViewModel: [DiscoverTVShowViewModel] { get }
+    var numberOfSections: Int { get }
+    
+    var updateMoviesUISection: (() -> Void)? { get set }
+    var updateTVShowsUISection: (() -> Void)? { get set }
+    
+    func numberOfElements(in sectionIndex: Int) -> Int
+    
+    func startFetchingMovies()
+    func startFetchingTVShows()
+}
+
+protocol DiscoverMovieViewModel {
+    var section: DiscoverViewModelSection { get }
+    var movie: TMDbDiscoverMovie { get }
+}
+
+protocol DiscoverTVShowViewModel {
+    var section: DiscoverViewModelSection { get }
+    var tvShow: TMDbDiscoverTVShow { get }
+}
+
+final class DefaultDiscoverMovieViewModel: DiscoverMovieViewModel {
+    let section: DiscoverViewModelSection = .movies
+    
+    let movie: TMDbDiscoverMovie
+    
+    
+    init(with data: TMDbDiscoverMovie) {
+        movie = data
+    }
+}
+
+final class DefaultDiscoverTVShowViewModel: DiscoverTVShowViewModel {
+    let section: DiscoverViewModelSection = .tvShows
+
+    let tvShow: TMDbDiscoverTVShow
+    
+    init(with data: TMDbDiscoverTVShow) {
+        tvShow = data
+    }
+}
+
+final class DefaultDiscoverViewModel: DiscoverViewModel {
     typealias Services = TMDbDiscoverService
+    let apiService: Services
     
-    private let apiService: TMDbDiscoverService
-    
-    private(set) var movies: [TMDbDiscoverMovie] = [] {
+    private(set) var moviesViewModel: [DiscoverMovieViewModel] = [] {
         didSet {
             updateMoviesUISection?()
         }
     }
     
-    var numberOfElements: Int { return movies.count }
-    
-    var updateMoviesUISection: (() -> Void)?
-
-    init(with services: TMDbDiscoverService) {
-        apiService = services
-    }
-}
-
-final class DefaultDiscoverTVShowsViewModel: DiscoverTVShowsViewModel {
-    typealias Services = TMDbDiscoverService
-    
-    private let apiService: TMDbDiscoverService
-    
-    private(set) var tvShows: [TMDbDiscoverTVShow] = [] {
+    private(set) var tvShowsViewModel: [DiscoverTVShowViewModel] = [] {
         didSet {
             updateTVShowsUISection?()
         }
     }
     
-    var numberOfElements: Int { return tvShows.count }
-    
+    var updateMoviesUISection: (() -> Void)?
     var updateTVShowsUISection: (() -> Void)?
     
-    init(with services: TMDbDiscoverService) {
-        apiService = services
-    }
-}
-
-final class DefaultDiscoverViewModel: DiscoverViewModel {
-    typealias MoviesViewModel = DefaultDiscoverMoviesViewModel
-    typealias TVShowsViewModel = DefaultDiscoverTVShowsViewModel
-    
-    var moviesViewModel: DefaultDiscoverMoviesViewModel
-    var tvShowsViewModel: DefaultDiscoverTVShowsViewModel
-    
-    typealias Services = TMDbDiscoverService
-    
-    var numberOfSections: Int {
-        return DiscoverViewModelSection.allCases.count
-    }
+    var numberOfSections: Int { DiscoverViewModelSection.allCases.count }
     
     init(with services: TMDbDiscoverService) {
-        //apiService = services
-        moviesViewModel = .init(with: services)
-        tvShowsViewModel = .init(with: services)
+        self.apiService = services
+        startFetchingMovies()
+        startFetchingTVShows()
+    }
+    
+    func numberOfElements(in sectionIndex: Int) -> Int {
+        precondition(DiscoverViewModelSection.allCases.map({ $0.rawValue }).contains(sectionIndex), "Invalid section")
+        let section = DiscoverViewModelSection(rawValue: sectionIndex)!
+        
+        switch section {
+        case .movies:
+            return moviesViewModel.count
+        case .tvShows:
+            return tvShowsViewModel.count
+        }
+    }
+    
+    func startFetchingMovies() {
+        apiService.movies(queue: nil) { [weak self] (result) in
+            switch result {
+            case let .success(movies):
+                self?.moviesViewModel = movies.map({ DefaultDiscoverMovieViewModel(with: $0) })
+                
+            case let .failure(error):
+                #if DEBUG
+                debugPrint(error)
+                #endif
+            }
+        }
+    }
+    
+    func startFetchingTVShows() {
+        apiService.tvShows(queue: nil) { [weak self] (result) in
+            switch result {
+            case let .success(tvShows):
+                self?.tvShowsViewModel = tvShows.map({ DefaultDiscoverTVShowViewModel(with: $0) })
+                
+            case let .failure(error):
+                #if DEBUG
+                debugPrint(error)
+                #endif
+            }
+        }
     }
 }

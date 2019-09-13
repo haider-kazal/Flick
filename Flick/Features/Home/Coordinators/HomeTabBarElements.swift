@@ -1,5 +1,5 @@
 //
-//  HomeTabBarAction.swift
+//  HomeTabBarElements.swift
 //  Flick
 //
 //  Created by Haider Kazal on 7/9/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum HomeTabBarElements: CaseIterable {
-    case discover
-    case search
+enum HomeTabBarElements: Int, CaseIterable {
+    case discover = 0
+    case search = 1
 }

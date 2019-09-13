@@ -13,11 +13,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    private(set) lazy var appCoordinator: AppCoordinator = .init(with: window!)
+    private(set) var rootViewController = UINavigationController()
+    
+    private lazy var appRouter: AppRouter = DefaultAppRouter(rootNavigationController: rootViewController)
+    private(set) lazy var appCoordinator: AppCoordinator = .init(with: window, router: appRouter)
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
+        //window.rootViewController = rootViewController
         self.window = window
+        
         appCoordinator.startWith(launchOptions: launchOptions)
         return true
     }

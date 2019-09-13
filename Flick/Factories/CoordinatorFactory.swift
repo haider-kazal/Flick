@@ -12,36 +12,26 @@ protocol CoordinatorFactory {
     var tabBarCoordinator: (configurator: Coordinator, toPresent: Presentable) { get }
     
     func discoverCoordinator(embedIn navigationController: UINavigationController) -> Coordinator
-    
-    /*
-     func makeAuthCoordinatorBox(router: Router) -> Coordinator & AuthCoordinatorOutput
-     
-     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
-     
-     func makeItemCoordinator(navController: UINavigationController?) -> Coordinator
-     func makeItemCoordinator() -> Coordinator
-     
-     func makeSettingsCoordinator() -> Coordinator
-     func makeSettingsCoordinator(navController: UINavigationController?) -> Coordinator
-     
-     func makeItemCreationCoordinatorBox() ->
-       (configurator: Coordinator & ItemCreateCoordinatorOutput,
-       toPresent: Presentable?)
-     
-     func makeItemCreationCoordinatorBox(navController: UINavigationController?) ->
-       (configurator: Coordinator & ItemCreateCoordinatorOutput,
-       toPresent: Presentable?)
-     */
+    //func searchCoordinator(embedIn navigationController: UINavigationController) -> Coordinator
 }
 
 final class DefaultCoordinatorFactory: CoordinatorFactory {
     var tabBarCoordinator: (configurator: Coordinator, toPresent: Presentable) {
         let homeTabBarController = HomeTabBarController()
-        let homeCoordinator = HomeCoordinator(with: homeTabBarController, coordinatorFactory: DefaultCoordinatorFactory())
+        let homeCoordinator = HomeCoordinator(coordinatorFactory: DefaultCoordinatorFactory())
         return (homeCoordinator, homeTabBarController)
     }
     
     func discoverCoordinator(embedIn navigationController: UINavigationController) -> Coordinator {
-        preconditionFailure("Not yet implemented")
+        let factory = DefaultDiscoverCoordinatorFactory()
+        let discoverRouter = DefaultAppRouter(rootNavigationController: navigationController)
+        
+        let coordinator = DiscoverCoordinator(factory: factory, appRouter: discoverRouter)
+        return coordinator
     }
+    
+    /*func searchCoordinator(embedIn navigationController: UINavigationController) -> Coordinator {
+        #warning("Not yet implemented!")
+        fatalError("Not yet implemented!")
+    }*/
 }

@@ -11,28 +11,25 @@ import UIKit
 final class HomeCoordinator: Coordinator {
     private let coordinatorFactory: CoordinatorFactory
     
-    private weak var homeTabBarController: HomeTabBarController?
+    let discoverNavigationController = UINavigationController()
+    lazy var discoverAppRouter = DefaultAppRouter(rootNavigationController: discoverNavigationController)
+    
+    private(set) lazy var homeTabBarController: HomeTabBarController = .init()
     
     lazy var childCoordinators: [Coordinator] = []
     
-    private lazy var discoverTabSelected: ((UINavigationController) -> Void) = { [weak self] (navigationController) in
-        guard navigationController.viewControllers.isEmpty else { return }
-        //Add Discover Dependency
-    }
-    
-    private lazy var searchTabSelected: ((UINavigationController) -> Void) = { [weak self] (navigationController) in
-        guard navigationController.viewControllers.isEmpty else { return }
-        //Add Discover Dependency
-        
-    }
-    
-    init(with homeTabBarController: HomeTabBarController, coordinatorFactory: CoordinatorFactory) {
-        self.homeTabBarController = homeTabBarController
+    init(coordinatorFactory: CoordinatorFactory) {
         self.coordinatorFactory = coordinatorFactory
     }
     
     func start() {
-        homeTabBarController?.onDiscoverSelected = discoverTabSelected
-        homeTabBarController?.onSearchSelected = searchTabSelected
+        addChildrens()
+    }
+    
+    private func addChildrens() {
+        let discoverCoordinator: DiscoverCoordinator = .init(factory: DefaultDiscoverCoordinatorFactory(), appRouter: discoverAppRouter)
+        addAsChild(coordinator: discoverCoordinator)
+        discoverCoordinator.start()
+        homeTabBarController.viewControllers = [discoverAppRouter.rootNavigationController!]
     }
 }

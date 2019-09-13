@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+protocol SearchCoordinatorFactory {
+    var searchViewController: SearchViewController { get }
+}
+
+//final class DefaultSearchCoordinatorFactory: SearchCoordinatorFactory {
+//    var searchViewController: SearchViewController {
+//        let viewModel = DefaultSearchViewModel
+//    }
+//}

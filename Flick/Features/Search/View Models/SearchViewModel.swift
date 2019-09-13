@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+protocol SearchViewModel {
+    
+}
+
+/*final class DefaultSearchViewModel: SearchViewModel, BaseViewModel {
+    typealias Services = <#type#>
+    
+    
+}*/

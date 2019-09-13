@@ -28,7 +28,7 @@ enum TMDbDiscoverRouter: TMDbBaseRouter {
         return .get
     }
     
-    var queries: [String : String]? {
+    var queries: [String: String]? {
         return nil
     }
     

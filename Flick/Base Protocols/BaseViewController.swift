@@ -8,8 +8,9 @@
 
 import UIKit
 
-class BaseViewController<ViewModel>: UIViewController, BaseController, ViewModelBased {
-    let viewModel: ViewModel
+class BaseViewController<View: UIView, ViewModel>: UIViewController, BaseController, ViewBased, ViewModelBased {
+    var rootView: View
+    var viewModel: ViewModel
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -23,9 +24,14 @@ class BaseViewController<ViewModel>: UIViewController, BaseController, ViewModel
         fatalError("Use .init(with:) instead")
     }
     
-    init(with viewModel: ViewModel) {
+    init(with view: View, and viewModel: ViewModel) {
+        rootView = view
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func loadView() {
+        view = rootView
     }
     
     override func viewDidLoad() {

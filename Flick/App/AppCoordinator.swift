@@ -12,13 +12,16 @@ final class AppCoordinator: Coordinator {
     private let router: AppRouter
     private let coordinatorFactory: CoordinatorFactory
     
-    lazy var childCoordinators: [Coordinator] = []
+    private(set) lazy var rootViewController = UINavigationController()
+    private(set) lazy var discoverAppRouter = DefaultAppRouter(rootNavigationController: rootViewController)
     
     private weak var window: UIWindow?
     
-    init(with window: UIWindow) {
+    lazy var childCoordinators: [Coordinator] = []
+    
+    init(with window: UIWindow?, router: AppRouter) {
         self.window = window
-        self.router = DefaultAppRouter(rootNavigationController: UINavigationController())
+        self.router = router
         self.coordinatorFactory = DefaultCoordinatorFactory()
     }
     
@@ -34,12 +37,14 @@ final class AppCoordinator: Coordinator {
     
     func start() {
         childCoordinators.forEach({ $0.start() })
+        window?.tintColor = .systemGreen
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }
     
     private func addDefaultDependency() {
-        let tabBarCoordinator = coordinatorFactory.tabBarCoordinator
-        addAsChild(coordinator: tabBarCoordinator.configurator)
-        router.changeRootTo(viewController: tabBarCoordinator.toPresent, withAnimation: true, hidingNavigationBar: false)
+        let discoverCoordinator: DiscoverCoordinator = .init(factory: DefaultDiscoverCoordinatorFactory(), appRouter: discoverAppRouter)
+        addAsChild(coordinator: discoverCoordinator)
+        router.changeRootTo(viewController: discoverCoordinator.rootViewController, withAnimation: true, hidingNavigationBar: false)
     }
 }

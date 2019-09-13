@@ -21,8 +21,12 @@ extension TMDbBaseRouter {
         
         urlComponents.path = "\(commonPathExtension)\(path)"
         
-        var queryItems = queries?.map { URLQueryItem(name: $0, value: $1) }
-        queryItems?.append(URLQueryItem(name: "api_key", value: Constants.TMDbConstants.apiKey))
+        var queryItems = [URLQueryItem(name: "api_key", value: Constants.TMDbConstants.apiKey)]
+        
+        if let additionalQueries = queries?.map({ URLQueryItem(name: $0, value: $1) }) {
+            queryItems.append(contentsOf: additionalQueries)
+        }
+        
         urlComponents.queryItems = queryItems
         
         guard let url = urlComponents.url else {

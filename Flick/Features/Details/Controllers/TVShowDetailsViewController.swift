@@ -8,23 +8,20 @@
 
 import UIKit
 
-class TVShowDetailsViewController: UIViewController {
+class TVShowDetailsViewController: BaseViewController<TVShowDetailsView, TVShowDetailsViewModel> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        title = viewModel.briefDetails.name
+        navigationItem.largeTitleDisplayMode = .never
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        DispatchQueue.main.async { [weak self] in
+            self?.rootView.tableView.tableHeaderView?.layoutIfNeeded()
+            self?.rootView.tableView.tableHeaderView = self?.rootView.tableView.tableHeaderView
+        }
     }
-    */
-
 }

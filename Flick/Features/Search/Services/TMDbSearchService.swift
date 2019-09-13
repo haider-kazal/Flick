@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+enum TMDbSearchServiceError: Error {
+    case networkError(error: Error)
+    case decodingError(error: DecodingError)
+    case unspecifiedError(error: Error)
+}

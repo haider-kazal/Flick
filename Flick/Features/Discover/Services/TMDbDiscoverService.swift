@@ -7,7 +7,7 @@
 //
 
 import Alamofire
-import Foundation
+import UIKit
 
 enum TMDbDiscoverServiceError: Error {
     case networkError(error: Error)
@@ -17,14 +17,19 @@ enum TMDbDiscoverServiceError: Error {
 
 protocol TMDbDiscoverService {
     func movies(queue: DispatchQueue?, onCompletion completionHandler: ((Swift.Result<[TMDbDiscoverMovie], TMDbDiscoverServiceError>) -> Void)?)
+    
     func tvShows(queue: DispatchQueue?, onCompletion completionHandler: ((Swift.Result<[TMDbDiscoverTVShow], TMDbDiscoverServiceError>) -> Void)?)
 }
 
 final class DefaultTMDbDiscoverService: TMDbDiscoverService {
     func movies(queue: DispatchQueue? = nil, onCompletion completionHandler: ((Swift.Result<[TMDbDiscoverMovie], TMDbDiscoverServiceError>) -> Void)?) {
-        Alamofire
-            .request(TMDbDiscoverRouter.movies)
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        ConnectionManager
+            .request(with: TMDbDiscoverRouter.movies)
             .responseSwiftyJSON { (response) in
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
                 switch response.result {
                 case let .success(json):
                     let dateFormatter: DateFormatter = .init()
@@ -37,6 +42,9 @@ final class DefaultTMDbDiscoverService: TMDbDiscoverService {
                         let movies = try jsonDecoder.decode([TMDbDiscoverMovie].self, from: json["results"].rawData())
                         completionHandler?(.success(movies))
                     } catch let error as DecodingError {
+                        #if DEBUG
+                         debugPrint(error)
+                        #endif
                         completionHandler?(.failure(.decodingError(error: error)))
                     } catch {
                         completionHandler?(.failure(.unspecifiedError(error: error)))
@@ -49,9 +57,14 @@ final class DefaultTMDbDiscoverService: TMDbDiscoverService {
     }
     
     func tvShows(queue: DispatchQueue? = nil, onCompletion completionHandler: ((Swift.Result<[TMDbDiscoverTVShow], TMDbDiscoverServiceError>) -> Void)?) {
-        Alamofire
-            .request(TMDbDiscoverRouter.movies)
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        ConnectionManager
+            .request(with: TMDbDiscoverRouter.tvShows)
+            .validate()
             .responseSwiftyJSON { (response) in
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
                 switch response.result {
                 case let .success(json):
                     let dateFormatter: DateFormatter = .init()
@@ -64,6 +77,9 @@ final class DefaultTMDbDiscoverService: TMDbDiscoverService {
                         let tvShows = try jsonDecoder.decode([TMDbDiscoverTVShow].self, from: json["results"].rawData())
                         completionHandler?(.success(tvShows))
                     } catch let error as DecodingError {
+                        #if DEBUG
+                         debugPrint(error)
+                        #endif
                         completionHandler?(.failure(.decodingError(error: error)))
                     } catch {
                         completionHandler?(.failure(.unspecifiedError(error: error)))

@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+extension Collection {
+    subscript(existAt index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}

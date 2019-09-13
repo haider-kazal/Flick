@@ -6,4 +6,13 @@
 //  Copyright © 2019 Haider Ali Kazal. All rights reserved.
 //
 
+import Alamofire
 import Foundation
+
+class ConnectionManager {
+    private static let sessionManager: SessionManager = .init()
+    
+    class func request(with router: URLRequestConvertible) -> DataRequest {
+        return sessionManager.request(router).validate()
+    }
+}

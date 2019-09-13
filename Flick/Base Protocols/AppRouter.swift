@@ -21,7 +21,7 @@ protocol AppRouter: Presentable {
 
 final class DefaultAppRouter: AppRouter {
     private lazy var completionHandlers: [UIViewController: (() -> Void)?] = [:]
-    private weak var rootNavigationController: UINavigationController?
+    weak var rootNavigationController: UINavigationController?
     
     var toPresent: UIViewController { return rootNavigationController! }
     

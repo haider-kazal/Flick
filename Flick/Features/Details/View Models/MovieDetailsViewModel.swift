@@ -1,5 +1,5 @@
 //
-//  DetailsViewModel.swift
+//  MovieDetailsViewModel.swift
 //  Flick
 //
 //  Created by Haider Kazal on 13/9/19.
@@ -32,6 +32,9 @@ protocol MovieDetailsViewModel: BaseViewModel {
     var apiService: Services { get }
     
     var updateTaglineInUI: ((_ tagline: String) -> Void)? { get set }
+    var updateHeader: (() -> Void)? { get set }
+    var updateCreditsSection: (() -> Void)? { get set }
+    var updateDetailsSection: (() -> Void)? { get set }
     
     func numberOfElements(in index: Int) -> Int
     func startFetching()
@@ -65,11 +68,11 @@ final class DefaultMovieDetailsViewModel: MovieDetailsViewModel {
     var updateCreditsSection: (() -> Void)?
     var updateDetailsSection: (() -> Void)?
     
-    init(with services: TMDbMovieService) {
+    init(with services: Services) {
         preconditionFailure("Do not use this method")
     }
     
-    init(with services: TMDbMovieService, for movie: TMDbDiscoverMovie) {
+    init(with services: Services, for movie: TMDbDiscoverMovie) {
         apiService = services
         briefDetails = movie
         
