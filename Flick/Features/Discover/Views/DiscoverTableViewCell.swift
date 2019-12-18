@@ -122,7 +122,8 @@ class DiscoverTableViewCellView: UIView {
             titleLabel.topAnchor.constraint(equalTo: posterImageView.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            titleLabel.bottomAnchor.constraint(equalTo: overviewLabel.topAnchor, constant: -10)
+            titleLabel.bottomAnchor.constraint(greaterThanOrEqualTo: overviewLabel.topAnchor, constant: -10)
+            //titleLabel.bottomAnchor.constraint(equalTo: overviewLabel.topAnchor, constant: -10)
         ])
         
         NSLayoutConstraint.activate([

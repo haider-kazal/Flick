@@ -48,9 +48,6 @@
 		F5B485412324331900243977 /* DiscoverCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B485402324331900243977 /* DiscoverCoordinator.swift */; };
 		F5B485442324374000243977 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B485432324374000243977 /* DiscoverViewController.swift */; };
 		F5B4854723243D4C00243977 /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B4854623243D4C00243977 /* DiscoverViewModel.swift */; };
-		F5B4854A23243E5300243977 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F5B4854923243E5300243977 /* Alamofire */; };
-		F5B4854D23243E7D00243977 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F5B4854C23243E7D00243977 /* SwiftyJSON */; };
-		F5B4855023243FE100243977 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F5B4854F23243FE100243977 /* Kingfisher */; };
 		F5B485532324418900243977 /* TMDbDiscoverService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B485522324418900243977 /* TMDbDiscoverService.swift */; };
 		F5B485572324421900243977 /* TMDbDiscoverMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B485562324421900243977 /* TMDbDiscoverMovie.swift */; };
 		F5B485592324426600243977 /* TMDbDiscoverTVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B485582324426600243977 /* TMDbDiscoverTVShow.swift */; };
@@ -59,6 +56,11 @@
 		F5B485602324448800243977 /* TMDbDiscoverRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B4855F2324448800243977 /* TMDbDiscoverRouter.swift */; };
 		F5B48562232444AF00243977 /* TMDbBaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B48561232444AF00243977 /* TMDbBaseRouter.swift */; };
 		F5B485662324464600243977 /* SwiftyJSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B485652324464600243977 /* SwiftyJSONSerializer.swift */; };
+		F5CE07E323AA21B90096BB2D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F5CE07E223AA21B90096BB2D /* Alamofire */; };
+		F5CE07E623AA21F60096BB2D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F5CE07E523AA21F60096BB2D /* SwiftyJSON */; };
+		F5CE07E923AA22BB0096BB2D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F5CE07E823AA22BB0096BB2D /* Kingfisher */; };
+		F5CE07EB23AA2EAD0096BB2D /* DiscoverViewHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE07EA23AA2EAD0096BB2D /* DiscoverViewHeaderCollectionReusableView.swift */; };
+		F5CE07ED23AA30F80096BB2D /* DiscoverViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE07EC23AA30F80096BB2D /* DiscoverViewCollectionViewCell.swift */; };
 		F5E2D24223159424003CDCAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E2D24123159424003CDCAD /* AppDelegate.swift */; };
 		F5E2D24923159429003CDCAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E2D24823159429003CDCAD /* Assets.xcassets */; };
 		F5E2D24C23159429003CDCAD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5E2D24A23159429003CDCAD /* LaunchScreen.storyboard */; };
@@ -141,6 +143,8 @@
 		F5B4855F2324448800243977 /* TMDbDiscoverRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDbDiscoverRouter.swift; sourceTree = "<group>"; };
 		F5B48561232444AF00243977 /* TMDbBaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDbBaseRouter.swift; sourceTree = "<group>"; };
 		F5B485652324464600243977 /* SwiftyJSONSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSONSerializer.swift; sourceTree = "<group>"; };
+		F5CE07EA23AA2EAD0096BB2D /* DiscoverViewHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		F5CE07EC23AA30F80096BB2D /* DiscoverViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		F5E2D23E23159424003CDCAD /* Flick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E2D24123159424003CDCAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
 		F5E2D24823159429003CDCAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -167,9 +171,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5B4855023243FE100243977 /* Kingfisher in Frameworks */,
-				F5B4854D23243E7D00243977 /* SwiftyJSON in Frameworks */,
-				F5B4854A23243E5300243977 /* Alamofire in Frameworks */,
+				F5CE07E923AA22BB0096BB2D /* Kingfisher in Frameworks */,
+				F5CE07E623AA21F60096BB2D /* SwiftyJSON in Frameworks */,
+				F5CE07E323AA21B90096BB2D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +253,8 @@
 			children = (
 				F505E20A232A25C700A35E61 /* DiscoverView.swift */,
 				F505E217232B706900A35E61 /* DiscoverTableViewCell.swift */,
+				F5CE07EA23AA2EAD0096BB2D /* DiscoverViewHeaderCollectionReusableView.swift */,
+				F5CE07EC23AA30F80096BB2D /* DiscoverViewCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -577,9 +583,9 @@
 			);
 			name = Flick;
 			packageProductDependencies = (
-				F5B4854923243E5300243977 /* Alamofire */,
-				F5B4854C23243E7D00243977 /* SwiftyJSON */,
-				F5B4854F23243FE100243977 /* Kingfisher */,
+				F5CE07E223AA21B90096BB2D /* Alamofire */,
+				F5CE07E523AA21F60096BB2D /* SwiftyJSON */,
+				F5CE07E823AA22BB0096BB2D /* Kingfisher */,
 			);
 			productName = Flick;
 			productReference = F5E2D23E23159424003CDCAD /* Flick.app */;
@@ -654,9 +660,9 @@
 			);
 			mainGroup = F5E2D23523159424003CDCAD;
 			packageReferences = (
-				F5B4854823243E5300243977 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				F5B4854B23243E7D00243977 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				F5B4854E23243FE100243977 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				F5CE07E123AA21B80096BB2D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				F5CE07E423AA21F60096BB2D /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				F5CE07E723AA22BB0096BB2D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = F5E2D23F23159424003CDCAD /* Products */;
 			projectDirPath = "";
@@ -703,6 +709,7 @@
 				F5E33F36232BEB5D00898967 /* TMDbTVShowDetails.swift in Sources */,
 				F505E2062329354F00A35E61 /* TMDbSearchService.swift in Sources */,
 				F505E20B232A25C700A35E61 /* DiscoverView.swift in Sources */,
+				F5CE07EB23AA2EAD0096BB2D /* DiscoverViewHeaderCollectionReusableView.swift in Sources */,
 				F5B485572324421900243977 /* TMDbDiscoverMovie.swift in Sources */,
 				F5E33F2D232BE08E00898967 /* TMDbCast.swift in Sources */,
 				F505E2032329340300A35E61 /* TMDbSearchRouter.swift in Sources */,
@@ -727,6 +734,7 @@
 				F5B485532324418900243977 /* TMDbDiscoverService.swift in Sources */,
 				F59AA871232BB4B000C1F7A8 /* TMDbProductionCompany.swift in Sources */,
 				F505E224232B853200A35E61 /* TMDbMovieRouter.swift in Sources */,
+				F5CE07ED23AA30F80096BB2D /* DiscoverViewCollectionViewCell.swift in Sources */,
 				F5E33F2F232BE8D600898967 /* TMDbTVShowService.swift in Sources */,
 				F5B485312321A64700243977 /* AppRouter.swift in Sources */,
 				F57E82D023162F1A00B19AC2 /* ViewModelBased.swift in Sources */,
@@ -1086,15 +1094,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F5B4854823243E5300243977 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		F5CE07E123AA21B80096BB2D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.9.0;
+				minimumVersion = 4.9.1;
 			};
 		};
-		F5B4854B23243E7D00243977 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+		F5CE07E423AA21F60096BB2D /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
@@ -1102,30 +1110,30 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		F5B4854E23243FE100243977 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		F5CE07E723AA22BB0096BB2D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
-				branch = xcode11;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.12.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F5B4854923243E5300243977 /* Alamofire */ = {
+		F5CE07E223AA21B90096BB2D /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F5B4854823243E5300243977 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = F5CE07E123AA21B80096BB2D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		F5B4854C23243E7D00243977 /* SwiftyJSON */ = {
+		F5CE07E523AA21F60096BB2D /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F5B4854B23243E7D00243977 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			package = F5CE07E423AA21F60096BB2D /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		F5B4854F23243FE100243977 /* Kingfisher */ = {
+		F5CE07E823AA22BB0096BB2D /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F5B4854E23243FE100243977 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = F5CE07E723AA22BB0096BB2D /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
