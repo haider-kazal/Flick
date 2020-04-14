@@ -29,14 +29,10 @@ final class DefaultTMDbTVShowService: TMDbTVShowService {
     func credits(forMovieID id: Int,
                  queue: DispatchQueue?,
                  onCompletion completionHandler: ((Swift.Result<TMDbCredit, TMDbTVShowServiceError>) -> Void)?) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
         ConnectionManager
             .request(with: TMDbTVShowRouter.credits(forID: id))
             .validate()
             .responseData { (response) in
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                
                 switch response.result {
                 case let .success(data):
                     let dateFormatter: DateFormatter = .init()
@@ -67,14 +63,10 @@ final class DefaultTMDbTVShowService: TMDbTVShowService {
     func details(forMovieID id: Int,
                  queue: DispatchQueue?,
                  onCompletion completionHandler: ((Swift.Result<TMDbTVShowDetails, TMDbTVShowServiceError>) -> Void)?) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
         ConnectionManager
             .request(with: TMDbTVShowRouter.details(forID: id))
             .validate()
             .responseData { (response) in
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                
                 switch response.result {
                 case let .success(data):
                     let dateFormatter: DateFormatter = .init()

@@ -7,7 +7,8 @@
 //
 
 import Alamofire
-import UIKit
+import Foundation
+import SwiftyJSON
 
 enum TMDbDiscoverServiceError: Error {
     case networkError(error: Error)
@@ -23,15 +24,14 @@ protocol TMDbDiscoverService {
 
 final class DefaultTMDbDiscoverService: TMDbDiscoverService {
     func movies(queue: DispatchQueue? = nil, onCompletion completionHandler: ((Swift.Result<[TMDbDiscoverMovie], TMDbDiscoverServiceError>) -> Void)?) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
         ConnectionManager
             .request(with: TMDbDiscoverRouter.movies)
-            .responseSwiftyJSON { (response) in
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                
+            .validate()
+            .responseJSON(completionHandler: { (response) in
                 switch response.result {
-                case let .success(json):
+                case let .success(payload):
+                    let json = JSON(payload)
+                    
                     let dateFormatter: DateFormatter = .init()
                     dateFormatter.dateFormat = "YYYY-MM-dd"
                     
@@ -53,20 +53,18 @@ final class DefaultTMDbDiscoverService: TMDbDiscoverService {
                 case let .failure(error):
                     completionHandler?(.failure(.networkError(error: error)))
                 }
-        }
+            })
     }
     
     func tvShows(queue: DispatchQueue? = nil, onCompletion completionHandler: ((Swift.Result<[TMDbDiscoverTVShow], TMDbDiscoverServiceError>) -> Void)?) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
         ConnectionManager
             .request(with: TMDbDiscoverRouter.tvShows)
             .validate()
-            .responseSwiftyJSON { (response) in
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                
+            .responseJSON(completionHandler: { (response) in
                 switch response.result {
-                case let .success(json):
+                case let .success(payload):
+                    let json = JSON(payload)
+                    
                     let dateFormatter: DateFormatter = .init()
                     dateFormatter.dateFormat = "YYYY-MM-dd"
                     
@@ -78,7 +76,7 @@ final class DefaultTMDbDiscoverService: TMDbDiscoverService {
                         completionHandler?(.success(tvShows))
                     } catch let error as DecodingError {
                         #if DEBUG
-                         debugPrint(error)
+                        debugPrint(error)
                         #endif
                         completionHandler?(.failure(.decodingError(error: error)))
                     } catch {
@@ -88,6 +86,6 @@ final class DefaultTMDbDiscoverService: TMDbDiscoverService {
                 case let .failure(error):
                     completionHandler?(.failure(.networkError(error: error)))
                 }
-        }
+            })
     }
 }

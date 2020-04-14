@@ -9,7 +9,7 @@
 import Alamofire
 import Foundation
 import SwiftyJSON
-
+/*
 extension Request {
     static var dateFormatterForDecoding: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -35,7 +35,7 @@ extension Request {
     public static func serializeResponseUsingSwiftyJSON(options: JSONSerialization.ReadingOptions,
                                                    response: HTTPURLResponse?,
                                                    data: Data?,
-                                                   error: Error?) -> Result<JSON> {
+                                                   error: Error?) -> Result<JSON, Error> {
         
         // If error is not nil, the request has failed, and should return failure with the error information
         guard error == nil else {
@@ -97,3 +97,4 @@ extension DataRequest {
                         completionHandler: completionHandler)
     }
 }
+*/

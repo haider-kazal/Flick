@@ -49,7 +49,7 @@ extension BaseRouter {
         urlRequest.httpMethod = method.rawValue
         urlRequest.timeoutInterval = 30
         
-        headers?.forEach({ urlRequest.addValue($0.value, forHTTPHeaderField: $0.key) })
+        headers?.forEach({ urlRequest.addValue($0.value, forHTTPHeaderField: $0.name) })
         
         guard doesMethodHaveBody(method) else {
             return urlRequest

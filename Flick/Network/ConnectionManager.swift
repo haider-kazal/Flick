@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 
 class ConnectionManager {
-    private static let sessionManager: SessionManager = .init()
+    private static let sessionManager: Session = .default
     
     class func request(with router: URLRequestConvertible) -> DataRequest {
         return sessionManager.request(router).validate()

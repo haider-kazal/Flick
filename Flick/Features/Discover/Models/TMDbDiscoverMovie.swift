@@ -10,7 +10,7 @@ import Foundation
 
 struct TMDbDiscoverMovie: Codable {
     let averageVote: Float
-    let backdropURL: URL
+    let backdropURL: URL?
     let genreIDs: [Int]
     let id: Int
     let isAdult: Bool
@@ -42,7 +42,7 @@ struct TMDbDiscoverMovie: Codable {
     }
     
     init(averageVote: Float,
-         backdropURL: URL,
+         backdropURL: URL?,
          genreIDs: [Int],
          id: Int,
          isAdult: Bool,
@@ -75,8 +75,13 @@ struct TMDbDiscoverMovie: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let averageVote = try container.decode(Float.self, forKey: .averageVote)
-        let backdropPath = try container.decode(String.self, forKey: .backdropURL)
-        let backdropURL = URL(string: "\(Constants.TMDbConstants.backdropImageBaseURLString)\(backdropPath)")!
+        
+        let backdropPath = try container.decodeIfPresent(String.self, forKey: .backdropURL)
+        let backdropURL: URL? =
+            backdropPath != nil
+                ? URL(string: "\(Constants.TMDbConstants.backdropImageBaseURLString)\(backdropPath!)")!
+                : nil
+
         let genreIDs = try container.decode([Int].self, forKey: .genreIDs)
         let id = try container.decode(Int.self, forKey: .id)
         let isAdult = try container.decode(Bool.self, forKey: .isAdult)
